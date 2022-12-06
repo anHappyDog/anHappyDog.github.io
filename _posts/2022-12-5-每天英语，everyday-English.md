@@ -103,6 +103,76 @@ We should keep the norms in school.
 
 #### 2022/12/6
 
+**mathematical**:[adj]数学的	**occur**:[v] 发生
+
+**atlas**:[n] 地图集	**inherent**:[adj] 内在的
+
+**humiliation**:[n]耻辱	**economist**:[n]经济学家
+
+**infinite**:[adj] 无限的	**successive**:[adj] 连续的
+
+**pamphlet**:[n] 小册子	**depth**:[n] 深度
+
+**optical**:[adj]视觉的（**optic**:光学的）
+
+**trigger**:[n]扳机（pull the gun's trigger）
+
+**secretary**:[n]秘书	**greedy**:[adj] 贪婪的
+
+**distraction**:[n] 分心	**optimum**:[adj] 最适宜的
+
+**foe**:[n]敌人	**urgency**:[n]紧急	**paralysis**:[n]瘫痪
+
+**entrepreneur**:[n]企业家	**paradigm**:[n]示例，示范
+
+**reckless**:[adj]鲁莽的，不计后果的
+
+**probable**:[adj] 很有可能的
+
+**overflow**:[v]外溢			**harness**:[n] 马具
+
+**temporal**:[adj] 世俗的	**parachute**:[n]降落伞
+
+**intensify**:[v]增强	**override**:[v]凌驾
+
+**assure**:[v]确保	**intensive**:[adj] 加强的
+
+I often solve mathematical problems to improve my mathematical skills.
+
+I can assure you that I will finish these tasks in time.
+
+The intensive work finally made him exhausted.
+
+Health and well-beings override wealth.
+
+The man used a parachute and boarded successfully.
+
+The glass is overflowing.
+
+It's reckless to play computer games when the final exam is coming.
+
+It's probable that he will win the game.
+
+He is such an entrepreneur that everyone admires him.
+
+He is beaten by the temporal lux.
+
+I feel a sense of urgency,afraid of being late for the exam.
+
+It's a good paradigm for the family tree.
+
+What's the optimum temperature for the fish?
+
+The universe is infinite.
+
+In his inherent world, he is sad and painful.
+
+Pull the gun's trigger and keep quiet.
+
+There are always some persons giving out such pamphlets afternoon.
+
+It's such a humiliation.
+
 
 
 
