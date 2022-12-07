@@ -173,6 +173,68 @@ There are always some persons giving out such pamphlets afternoon.
 
 It's such a humiliation.
 
+### 2022/12/7（31）
+
+**architect**:[n] 建筑师	**origin**:[n]起源	**overhaul**:[n]大修
+
+**illuminate**:[v]照亮	**dietary**:[adj] 饮食的	**cognition**:[n]认知
+
+**inborn**:[adj]天生的	**adverse**:[adj] 不利的	**tutor**:[n] 家庭教师
+
+**overlap**:[n]重叠，重复	**ultimately**:[adv] 最终	**apt**:[adj]恰当的
+
+**panoramic**:[adj] 全景的	**cardinal**:[adj]基本的	**virtual**:[adj] 虚拟的
+
+**solitude**:[n]孤独	**overturn**:[v]打翻	**cue**:[n]球杆，[v]给..提示
+
+**paralyze**:[vt]使瘫痪 	**grid**:[n] 格子	**parrot**:[n] 鹦鹉
+
+**ordeal** :[n]严峻的考验	**needle**:[n]针	**identity**:[n]身份
+
+**chronicle**:[n] 编年史	**pass**[v]传递	**speculate**:[v]猜想，猜测
+
+**compatible**:[adj]合得来的，适配的	**native**:[adj]本地的
+
+**correlate**:[v]使关联	**arouse**:[v]唤起	
+
+His dream is to become an architect one day.
+
+The origin of people is still unknown today.
+
+After the long trip, my car needs an overhaul.
+
+When the sun rises, it illuminates the ground,sweeping the darkness.
+
+Doctor tells me that I should change my dietary habits or I will suffer a lot from them.
+
+Sometimes it's hard to change some person's cognition.
+
+He is an inborn artist,drawing numbers of good paintings.
+
+They are compatible because they have many overlap interests.
+
+Ultimately, he decided to study hard and get good grades.
+
+He made an apt conclusion to the current situation.
+
+He took a panoramic photo of the scenery.
+
+The cardinal numbers help us to identify the quantities of things.
+
+I was so angry that I overturned my glass.
+
+Although he is paralyzed, he still holds a positive attitude towards life.
+
+To sew the clothing you need to have needles and thread.
+
+The chronicle.
+
+When I was aroused by my clock, the day begins.
+
+They wear the native traditional clothes.
+
+Some parrots can learn to speak like people.
+
 
 
 
