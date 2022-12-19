@@ -235,7 +235,28 @@ They wear the native traditional clothes.
 
 Some parrots can learn to speak like people.
 
+#### 2022/12/10
 
+****
 
+**ignition**:[n]点火	**mutual**:[adj]共同的	**humanist** 人道主义者
 
+**rehearsal**:[n]排练	**swap**:[v]交换	**destination**:[n]目的地
 
+**olive**:[n]橄榄	**parasite**:[n]寄生虫	**delicacy**:[n]精致
+
+**weird**:[adj]奇怪的	**federal**:[adj]联邦的	**partisan**:[n]党羽
+
+**lecturer**:[n]讲师	**military**:[adj]军事的	**patrol**:[n]巡逻兵
+
+**integration**:[n]融合	**peel**:[v]剥皮	**parole**:[n]假释
+
+**diagnosis**:[n]诊断	**genetic**:[adj]遗传的	**pastry**:[n] 糕点
+
+**voyage**:[n]航行	**organic**:[adj]有机的	**illiteracy**:[n]无知
+
+**prominent**:[adj]显眼的	**abort**:[v]中断	**badly**:[adv]十分
+
+**patronize**:[v]屈尊对待	**neat**整洁的	**peddle**:[v]叫卖	
+
+**gender**:[n]性别	
