@@ -1,5 +1,5 @@
 ---
-title: 在树莓派Raspberry4B下编译Tensorflow
+title: 在树莓派Raspberry4B下编译Tensorflowlite
 author: lonelywatch
 date: 2023-03-7 20:13 +0800
 categories: [深度学习,tensorflow]
@@ -12,17 +12,131 @@ tags: [深度学习,tensorflow,树莓派]
 
 ---
 
+​			以下的步骤文档都有(但是他没有说会编译静态库，，)，但是记录了过程中自己出现的一些错误。
+
+---
+
+​			**这是在树莓派4B aarch64 Debian11 上进行的。**
+
 ### 开始
 
-​			我们需要通过Bazel（跟Make类型差不多）编译Tensorflow源码，Bazel通过[bazelbuild/bazel: a fast, scalable, multi-language and extensible build system (github.com)](https://github.com/bazelbuild/bazel) 这里可以下载（注意一定要选择版本适合的，这里tensorflow官网 [从源代码构建  | TensorFlow](https://www.tensorflow.org/install/source?hl=zh-cn)有对应的版本,我之前没看浪费了好久时间> - <）
+​		**下面会用到一些工具，如果过程中出现工具上的问题，可以搜索相关问题就可以解决啦。**（~~当然不是因为事后忘记装了哪些东西了~~）
+
+​			去github clone 下来tflite-micro 仓库(tensorflow仓库移除了lite用到的micro文件夹，新建了tflite-micro仓库)
+
+```
+https://github.com/tensorflow/tflite-micro
+```
+
+​			前往
+
+```
+./tflite-micro/
+```
+
+​			执行
+
+```
+make -f tensorflow/lite/micro/tools/make/Makefile evaluate_cc_test
+//这个指令会编译执行 helloworld的测试cc文件同时编译静态库
+```
+
+​			如果嫌下载太慢，可以在自己电脑本地下载压缩包传到
+
+```
+tensorflow/lite/micro/tools/make/downloads/
+```
+
+​			总共有3个，分别为pigweed（这个最难下载下来- -），kissfft，flatbuffers。
+
+​			然后去这个目录
+
+```
+./tflite-micro/gen/linux_aarch64_default/lib
+```
+
+​			这里有我们想要的C++ 静态库**libtensorflow-microlite.a** ，我们可以选择把它放在系统的lib文件夹里，我这里是
+
+```
+/usr/lib
+```
+
+​			然后我们需要找到所有的头文件，我尝试了用find + xargs tar 但是不奏效， **并且，有些头文件需要自己单独找出来**，为了赶时间（之前耽搁太多时间），所以我直接把 ./tflite-micro/tensorflow 直接放进了系统的头文件家里面，可以不这样。
+
+```
+/usr/include/
+```
+
+​			执行到这里，我们可以尝试写个带有helloworld所有的测试文件的头文件的cc文件编译试试，或者直接copy
+
+比如这里我的文件名为test1.cc,另外我为了方便我还把helloworld里面两个cc和两个h文件和它放在一起。
+
+```
+g++ test1.cc hello_world_intXXX.cc hello_world-floXXX.cc -o -lm -g -ltensorflow-microlite -DTF_LITE_STATIC_MEMORY
+
+```
+
+​		这里会报一系列错误，最开始是头文件的错误，因为有些头文件如all_ops_resolver.h 被挪动了位置，而有些头文件如flatbaffers/flatbaffers.h这些第三方是因为在这个目录中
+
+```
+/home/pi/tflite-micro/tensorflow/lite/micro/tools/make/downloads
+```
+
+​		找到缺失的头文件，然后按照目录复制进系统的头文件目录，比如 把 上面的路径/flatbuffers/include/ 中的flatbuffers文件夹复制过去。
+
+​		如果其他类似的头文件没找到，基本都在tflite-micro文件夹中，使用 
+
+```
+grep -R /（或者 ./） 文件名 
+```
+
+​		如果用gcc 会报错，如果不用 -lm 会报math函数的错， -l + 静态库的文件名，省去前缀lib和后缀.a或者.so,  另外  -L + 路径指定库的位置， **-DTF_LITE_STATIC_MEMORY** 这里不加的话如果只引入头文件没问题，但是后续会RE报段错误， 因为 **input->data.f[0] 并没有赋内存，使用这个参数可以让他赋予内存**(这里加了 -g， 方便用gdb调试，调试可以看看我的帖子)。
+
+​		如果没有什么其他的错误的话那么基本成功了，但是这样是不够的，我想要使用Make来构建项目，这样非常有效率，不用每次都编译长时间，自己亲自动手用Make，Make的基本知识就真的完全记在脑子里了。关于Makefile的编写可以看看我的帖子^ ^.
+
+### 后记
+
+​		总算找到了一条正确的路，浪费了好几天时间，要是其他人来估计早弄完了，，中间碰到一大堆破事，梯子突然证书出问题了，然后重弄，树莓派系统还重装了两次，弄乱了只好重装，后面干脆只用终端，但是现在不能关闭了- -，还有OO和OS 蓝桥杯等着折磨我，菜狗渴望救赎。
+
+​		另外，如果有错误的话，请尽量使用必应和Google，而且在这里碰到的大多数问题github的issue那里基本都有（事后经验），最近打算做个防摔倒的案例给那个科研课堂。
 
 ---
 
 ---
 
-​			Tensorflow的源代码可以从[tensorflow/tensorflow: An Open Source Machine Learning Framework for Everyone (github.com)](https://github.com/tensorflow/tensorflow) 这里下载（安装时记得切换到相应版本的分支）
+---
 
-​			
+### 分割线！！！！！！！！！！！！！！！！！！！
+
+​			**以下是本人弄错了地方（没看文档，没去仔细看仓库，只需要编译lite就好了，浪费好几天的时间，不过还是编译下来了）orz.**        
+
+​			下面的东西都可以不用看----
+
+---
+
+---
+
+---
+
+### 开始
+
+​			我们需要通过Bazel（跟Make类型差不多）编译Tensorflow源码，Bazel通过[(github.com)](https://github.com/bazelbuild/bazel) 这里可以下载（注意一定要选择版本适合的，这里tensorflow官网(https://www.tensorflow.org/install/source?hl=zh-cn)有对应的版本,我之前没看浪费了好久时间> - <）
+
+---
+
+---
+
+​			~~Tensorflow的源代码可以从(https://github.com/tensorflow/tensorflow) 这里下载（安装时记得切换到相应版本的分支）~~。去Tensorflow 仓库 的micro 前往 tflite仓库，附上直达链接：
+
+```
+https://github.com/tensorflow/tflite-micro
+```
+
+---
+
+---
+
+
 
 ### Bazel
 
