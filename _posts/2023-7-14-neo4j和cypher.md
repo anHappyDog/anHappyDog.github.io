@@ -45,3 +45,72 @@ MATCH (ee:Person) WHERE ee.name = 'Emil' RETURN ee;
 ```
 
 `MATCH`表示匹配，`()`表示节点 `WHERE`表示判断条件，`RETURN`表示返回结果。
+
+一个经典的返回所有节点的匹配语句：
+
+```cypher
+MATCH (n) RETURN n;
+```
+
+
+
+```cypher
+(:Person {name;'Rosa'})-[:LIVES_IN]->(:Place {city:'Berlin',country:'DE'}) 
+                                             
+```
+
+在知识图谱中，信息就在图谱中，而非构成图谱的规定，上述语句表明了一段信息,如之前所说，`()`表示一个节点，`:`之后表示该节点的标签，而`{}`表示该节点的属性，`-[:LIVES_IN]->`表示两节点间名字为LIVES_IN(`:`表示名字)的关系，这么解释的话，可以翻译为：一个name为Rosa的Person LIVES_IN 一个city为Berlin，country为DE的Place。如果使用CREATE的话，就可以创建这么一段信息。
+
+`DELETE`用于节点，DETACH DELETE 删除附加在删除节点上的关系（如果没有DETACH遇到该情况，删除会终止），使用MATCH和DELETE可以删除特定内容。
+
+CREATE并不会将产生的同样的节点合并，使用 `MERGE`来实现增加并合并（事实上，需要记录中的内容完全存在于原来的图，只存在部分是不会合并的）。在neo4j中也存在约束和主键，使用
+
+```cypher
+CREATE CONSTRAINT no_duplicate_cities FOR (p:PLACE) REQUIRE (p.country,p.city) IS NODE KEY
+```
+
+非常遗憾的是需要企业版才能使用。设置约束后，只需要找到（未找到则创建）需要的节点，然后创建关系:
+
+```cypher
+MERGE (p:PERSON {name:'dd'})
+MERGE (d:PLACE {city:'Berlin',country:'DE'})
+MERGE (p)-[:LIVES_IN{since:1999}]->(d)
+```
+
+这样就会将p与已存在的d建立起关系。这种写法并不需要建立约束。
+
+---
+
+上面已经介绍了Cypher的增加，删除，查找操作，关于修改操作，只需要找出相应的节点或关系，通过`SET`和`REMOVE`关键字修改相应值即可,WHERE则是判断条件(也可以全都写到MATCH中去)。
+
+```cypher
+MATCH (p.Person) WHERE p.name ='Rosa' SET p.dob = 111111;
+MATCH (p.Person) WHERE p.name ='Rosa' REMOVE p.dob;
+```
+
+关于WHERE的判断，有很多判断情况，如：
+
+- `<>`不等于
+- `STARTS WITH` 前缀为
+- `CONTAINS`包含
+- `ENDS WITH`后缀为
+- `NOT`否定
+- `IN`在之中,`AND`并且
+
+在关系中，`-[xxx*2..2]->`表示路径为2~2，表示路径长度区间。
+
+---
+
+上述操作为`Graphs local`操作，下面为`Graphs global`操作：
+
+cypher也支持别名以及函数调用，排序等。
+
+```cypher
+MATCH (p:PLACE)<-[L:LIVES_IN]-(:PERSON) RETURN p as place , count(l) AS rels ORDER BY rels DESC
+```
+
+`AS`使用别名，`ORDER BY`表示按照某内容排序，`DESC`表示描述内容。
+
+关于`APOC`:APOC是一个neo4j中很受欢迎的函数库,最好别自己重复造轮子。
+
+`EXPLAIN`和`PROFILE`
