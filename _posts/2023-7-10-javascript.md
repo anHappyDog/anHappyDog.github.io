@@ -62,3 +62,16 @@ function functionName(arg0,....,argn) {
 ### 值与引用
 
 Javascript也分值和引用。
+
+## Document
+
+document是当前html的对象，js使用document来与html进行交互。
+
+常见的方法：
+
+```javascript
+document.querySelector("selector");
+//根据选择器查找第一个合适的元素，返回其对象，否则返回null
+
+```
+
