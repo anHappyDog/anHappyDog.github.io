@@ -3,7 +3,7 @@ title: shell脚本与Makefile
 author: lonelywatch
 date: 2023-08-25 10:05
 categories: [SHELL]
-tags: [SHELL,LINUX]
+tags: [SHELL,LINUX,Makefile]
 ---
 
 ## shell脚本
@@ -61,6 +61,8 @@ if条件为命令的执行语句被执行，当且仅当该命令的返回码为
 对于复合条件，使用`[ ]&&[]`和`[  ]||[  ]`的形式。
 
 bash还提供了一些条件判断的高级特性：使用单括号使用子shell，使用双方括号来对字符串进行额外的处理，
+
+事实上，if-else可以简化为`[[ else-condition ]] || command;`如果else-condition不满足才会执行后面的command。
 
 #### for
 
@@ -273,6 +275,43 @@ make中函数可以分为：字符串操作，文件名操作。流程控制，�
 $(func-name [arg1,arg2,...argN])
 ```
 
+调用自定义函数时需要在函数名前加上call并隔开。
+
+#### 字符串操作
+
+- `$(filter pattern text)`会返回text中满足pattern（可使用%）的元素。
+
+- `$(filter-out pattern text)` 会返回text中不满足pattern（可使用%）的元素。
+
+- `$(subst search_text,replace_text,text)`将text中的元素所有search_text都替换成replace_text(不支持%，常用来替换文件后缀名)
+
+- `$(patsubst search_pattern,replace_pattern,text)`支持使用一个%但是匹配的是整个元素，功能与subst类似。
+
+- `$(words text)`返回text中的单词数（被空格隔开）
+
+- `$(firstword text)`返回text中的第一个单词，否则为空
+#### 自定义函数
+
+类似于定义变量，只是存储的是指令序列，使用参数和shell相同($N)。
+
+
+#### 其他函数
+
+- `$(sort list)`去重并排序。
+
+- `$(shell command)`在子shell中执行command，并返回结果。
+
+- `$(strip text)` 去除前后所有空格，将单词之前的空白换成一个空格。
+#### 文件名函数
+
+- `$(wildcard pattern...)` 对列表的每个模式进行扩展。
+- `$(dir list...)`返回list中每个单词的目录部分。
+- `$(suffix name...)`返回每个单词的后缀。
+- `$(basename name...)`返回每个单词不带后缀的部分。
+- `$(addsuffix suffix,name...)`为每个单词添加后缀。
+- `$(addprefix prefix,name...)`为每个单词添加前缀。
+
+
 ###  递归Make
 
 对于含有多个目录的Make项目，可以使用递归Make，基本形式为：
@@ -283,4 +322,8 @@ $(MAKE) --directory=
 
 MAKE变量始终指向make的实际位置，该指令会并行跳转到directory指定的目录，执行make。
 
-一个有趣的地方是，该方法也可以通过子shell执行`cd`与make来实现（甚至在最初的0.11linux中的make也是通过cd实现make子目录的）。
+一个有趣的地方是，该方法也可以通过子shell执行`cd`与make来实现（甚至在最初的0.11linux中的make也是通过cd实现make子目录的，只不过目标带有路径）。
+
+### 非递归Make
+
+通过引用子目录的mk文件来实现make子目录。
