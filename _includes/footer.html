@@ -1,3 +1,11 @@
+<style>
+.footer-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+</style>
 <footer class="site-footer h-card">
   <data class="u-url" href="{{ "/" | relative_url }}"></data>
 
@@ -5,13 +13,13 @@
 
     <div class="footer-col-wrapper">
       <div class="footer-col">
-        <p class="feed-subscribe">
+        <!-- <p class="feed-subscribe">
           <a href="{{ site.feed.path | default: 'feed.xml' | absolute_url }}">
             <svg class="svg-icon orange">
               <use xlink:href="{{ 'assets/minima-social-icons.svg#rss' | relative_url }}"></use>
             </svg><span>Subscribe</span>
           </a>
-        </p>
+        </p> -->
       {%- if site.author %}
         <ul class="contact-list">
           {% if site.author.name -%}
@@ -24,7 +32,7 @@
       {%- endif %}
       </div>
       <div class="footer-col">
-        <p>{{ site.description | escape }}</p>
+        <p><a href="https://beian.miit.gov.cn">京ICP备2023026872号-1</a></p>
       </div>
     </div>
 
