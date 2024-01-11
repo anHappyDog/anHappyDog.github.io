@@ -110,7 +110,9 @@ rails g migration Remove<FieldName>From<Model>
 
 如果
 
+### 删除模型
 
+删除模型文件，删除相关迁移文件，然后执行`rails db:rollback`
 
 ### 外键与级联
 
@@ -166,6 +168,14 @@ rails中使用下划线+名字的方式来命名partial视图文件。
 
 对于`<%= render article %>`就得有个`_article.html.erb`的partial视图文件。
 
+如果render需要传递参数的话，需要通过local属性，类似于：
+
+```erb
+<%= render partial: "dd", locals: { value1: .., value2: ..}  %>
+```
+
+然后在partial组件中通过`<%= value1 %>`来使用这些参数。
+
 除了render外还有一些别的特殊的方法，包括：`redirect_to`,`send_data`和`send_file`等方法。
 
 用的多的有：`link_to`,`button_to`这些。这两个的区别在于，link_to使用GET方法，而button_to使用POST方法，并且分别生成a和button元素。
@@ -179,6 +189,16 @@ rails中使用下划线+名字的方式来命名partial视图文件。
 > 这里的惯例就是后面的target事实上是routes里头的route名字 + _path
 
 ### form表单的创建
+
+使用form_with来创建表单。类似于：
+
+```erb
+<%= form_with model: @product, url: <path> do |form| %>
+  <!-- 表单字段... -->
+<% end %>
+```
+
+其中url指定使用的路由名，model负责指定使用的模型
 
 
 
@@ -195,8 +215,6 @@ rails中使用下划线+名字的方式来命名partial视图文件。
 Controller中可以包含任何自定义方法，不过推荐使用rails自带的show这些。
 
 使用`rails destroy controller <name>`来删除生成的控制器。
-
-
 
 ---
 
@@ -292,8 +310,6 @@ get 'login', to: "sessions#new",as 'login'
 
 (命名路由)，使用`as`关键字进行命名.
 
-
-
 ### devise与用户验证
 
 devise插件被rails用来进行用户验证机制。
@@ -308,6 +324,63 @@ devise插件被rails用来进行用户验证机制。
 
 使用`rails g devise:view`来将devise使用的视图copy到项目中（app/views/devise），这样就可以对其进行自定义修改。
 
+#### 自定义devise验证
+
+devise默认使用email进行验证，需要对config/devise/devise.rb(devise的配置文件)进行相应的配置，添加上`config.authentication_keys=[:username]`,然后修改模型User，添加上：
+
+```ruby
+```
+
+
+
+
+
 ## 使用自定义样式和脚本
 
 这两个都在`/app/assets`中，在对应的文件夹创建对应的文件，
+
+对于js脚本，如果只想在某个或者某些视图文件中使用的话，可以使用`<%= javascript_include_tag 'example' %>`来引用上面提到的文件夹的脚本。
+
+对于css文件也是类似，使用`<%= stylesheet_include_tag "example" %>`来引用自定义的css样式文件。
+
+### Rails 7
+
+rails 7 变得有些不同，对于:delete方法，需要改写成:`data: {turo_method: :delete}`
+
+## 布局
+
+布局文件存放在app/views/layout文件夹中，默认全部使用application.html.erb文件，如果需要为某些控制器或者某些动作使用特定的布局文件，需要在控制器中对布局文件进行指定，类似于：
+
+```ruby
+class TestController < ApplicationController
+   layout "your_layout" 
+    
+end
+```
+
+如果只需要为某些动作指定layout，那么，则将上面的语句修改为：
+
+```erb
+layout "your_layout",only: :action
+```
+
+## Bootstrap
+
+Bootstrap就是一个css框架，对着文档用就行。
+
+需要注意的是，如果一些脚本文件不导入，一些功能是无法自动运行的（比如轮播图，，）。
+
+在rails7中，使用importmap来导入并打包脚本文件。
+
+在项目文件夹中执行`ruby .\bin\importmap pin bootstrap`
+
+(windows中，如果是linux则执行importmap),来打包bootstrap的js文件，然后在application.js中`import "bootstrap"`即可。
+
+## 图片的处理
+
+使用`Active Storage`插件来进行处理图片。
+
+## 动态网页
+
+erb一样可以实现元素动态类定义，条件定义等功能。
+
