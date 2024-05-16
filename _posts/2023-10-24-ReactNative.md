@@ -1,17 +1,14 @@
 ---
-![avatar](D:\workspace\anHappyDog.github.io\assets\img\avatar.jpg)
-date:  2023-10-24 14:27:10 +0800
+title: React Native
+date: 2023-10-19 22:41 +0800
 categories: [Android]
 tags: [RN,Android]
+author: lonelywatch
 ---
 
 这次Android作业用React-Native做前端，就不用原生Android开发了。Rn使用Js或者是Ts，采用声明式编程，可以像vue那样使用组件式开发。
 
 ### Vscode与Android配置
-
-![android-chrome-192x192](D:\workspace\anHappyDog.github.io\assets\img\favicons\android-chrome-192x192.png)
-
-
 
 ### style
 
