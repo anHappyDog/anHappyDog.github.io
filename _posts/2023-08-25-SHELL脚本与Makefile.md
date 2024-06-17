@@ -1,5 +1,5 @@
 ---
-title: shell脚本与Makefile
+title: SHELL脚本与Makefile
 author: lonelywatch
 date: 2023-08-25 10:05
 categories: [SHELL]
