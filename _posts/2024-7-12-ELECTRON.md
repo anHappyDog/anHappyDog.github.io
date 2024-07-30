@@ -9,3 +9,14 @@ tags: [ELECTRON,WEB]
 # ELECTRON
 
 [ELECTRON](https://www.electronjs.org/) 是一款拥有构建跨平台桌面应用程序的开源框架，主要基于Chromium和Node.js。可以使用WEB三件套来开发桌面应用程序，同时具有原生应用程序的功能和性能。
+
+## TS
+
+为了使用TS代替JS开发Electron项目,在项目根目录添加`tsconfig.json`文件,内容如下:
+
+```json
+
+
+```
+
+
