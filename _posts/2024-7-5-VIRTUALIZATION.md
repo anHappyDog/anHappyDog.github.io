@@ -67,15 +67,6 @@ VMM可被看作是VM的控制程序，通常由若干模块组成：
 
 
 
-
-
-
-
-
-
-
-
-
 ## 参考文献
 
 1. [Formal Requirements for Virtualizable Third Generation Architectures](https://dl.acm.org/doi/abs/10.1145/361011.361073)
