@@ -73,6 +73,65 @@ DWARF (Debugging With Attributed Record Formats)是一种用于描述调试信�
 
 > 因为运行时并不能修改代码段，所以需要实现位于数据段的GOT表与PLT表这一机制来实现外部符号地址的填充。
 
+### Sections
+
+动态链接涉及到一些特殊的节，主要有:`.got`,`.plt`,`.dynamic`,`.dynsym`与`.dynstr`等。
+
+#### .dynamic
+
+`.dynamic`包含了程序与动态链接相关的信息，具体而言为一个二元组数组，每个二元组由类型与值组成，其具体的内容被定义为：
+
+```c
+typedef struct
+{
+  Elf32_Half si_boundto;		/* Direct bindings, symbol bound to */
+  Elf32_Half si_flags;			/* Per symbol flags */
+} Elf32_Syminfo;
+
+typedef struct
+{
+  Elf32_Sword	d_tag;			/* Dynamic entry type */
+  union
+    {
+      Elf32_Word d_val;			/* Integer value */
+      Elf32_Addr d_ptr;			/* Address value */
+    } d_un;
+} Elf32_Dyn;
+```
+
+其中`d_tag`的取值主要有（根据其类型d_un被解释为地址或是单纯的数值）: 
+
+- `DT_NEEDED` :用于表示该库或程序需要的共享库名称，其d_un的d_ptr指向`.dynstr`中对应共享库的名称.
+
+- `DT_PLTGOT`: 指向GOT的地址。
+
+- `DT_SYMTAB`: 指向`.dynsym`的地址。
+
+- `DT_STRTAB`: 指向`.dynstr`的地址。
+
+- `DT_RELA`: 指向`.rela.dyn`的地址。
+
+- `DT_REL`: 指向`.rel.dyn`的地址。
+
+- `DT_STRSZ`: 表示`.dynstr`段的大小。
+
+- `DT_SYMENT`: 表示`.dynsym`中每个符号的大小。
+
+- `DT_INIT`: 表示程序的初始化函数的地址。
+
+- `DT_HASH`: 指向`.hash`的地址,使用hash可以加速符号解析。
+
+- `DT_RPATH` : 指向`.dynstr`段中搜索路径的指针。
+
+#### .dynsym
+
+`.dynsym`类似于`.sym`,但是专门用于动态链接，只包含了运行时需要解析的符号，而`.sym`则包含了所有符号。
+
+#### .got
+
+
+#### .plt
+
 ### PIC代码
 
 PIC(Position Independent Code)是一种与位置无关的代码，PIC代码可以在任何位置运行，而不需要进行修正。在动态链接中，由于代码的位置是未知的，所以需要使用PIC代码。PIC代码的特点是不使用绝对地址，而是使用相对地址，基于通用的重定位之上，使用GP指针来对外部符号进行定位,这样就可以在任何位置运行。PIC代码通常需要遵守某一ABI规范。
