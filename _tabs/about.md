@@ -4,6 +4,7 @@ icon: fas fa-info-circle
 order: 4
 ---
 
+<<<<<<< HEAD
 ### 我是谁？
 
 ​	一名BUAA计算机学院的混子，干啥啥不行，摆烂第一名。
@@ -18,3 +19,7 @@ order: 4
 
 ​	还是得要有一个能够说自己想说的话的地方啊，不然在宿舍里天天待着就什么也干不了了啊。
 
+=======
+> Add Markdown syntax content to file `_tabs/about.md`{: .filepath } and it will show up on this page.
+{: .prompt-tip }
+>>>>>>> temp-branch-v7.1.1
