@@ -28,3 +28,7 @@ gem "kramdown"
 gem "katex"
 
 gem "execjs"
+
+gem 'logger'
+gem 'csv'
+gem 'base64'
