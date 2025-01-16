@@ -11,7 +11,15 @@ usemath: latex
 
 ## Self Attention
 
+[注意力机制](https://arxiv.org/abs/1409.0473)最早于2014年提出,用于解决传统的seq2seq模型（2个RNN将变长输入变为固定上下文向量，再生成目标序列，导致过长输入会损失很多信息）不能较好地处理长文本序列地问题。
 
+注意力机制取名自人类的注意力机制，即在处理问题时，人类会根据问题的不同部分分配不同的注意力，具体来说，注意力机制会学习一个可变的权重分布，用来表示输入中哪些部分对解码词最"重要"。
+
+
+
+
+
+![](https://lonelywatch-1306651324.cos.ap-beijing.myqcloud.com/image-20250114212334510.png)
 
 ## Multi-Head Self Attention
 
@@ -19,3 +27,4 @@ usemath: latex
 ## Transformer
 
 
+![](https://lonelywatch-1306651324.cos.ap-beijing.myqcloud.com/image-20250114212252405.png)

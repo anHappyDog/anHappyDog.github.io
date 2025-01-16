@@ -7,6 +7,10 @@ tags: [AIGC,ML]
 usemath: latex
 ---
 
+# 声明
+
+> 虽然后续能够安装CUDA11.0版本，安装时由于覆盖了10.2版本的部分库，jetson nano的GPU就抛锚了，llama.cpp也不会利用jetson nano其自带的GPU，所以要么将CUDA11的驱动直接移植到Jetson nano里面（估计难度很大，而且有可能不行），要么只能使用古早版本。jetson nano使用的Maxwell GPU嵌入在soc里面，`nvidia-detector`包括`nvidia-smi`都是无法检测的。
+
 # 说明
 
 nvidia给jetson nano提供的jetson pack只有4.6.1,里面Ubuntu的版本为18.04，所以如果需要编译当前最新的llama.cpp(hash:44d1e796d08641e7083fcbf37b33c79842a2f01e),需要安装一些额外的工具:
@@ -15,7 +19,7 @@ nvidia给jetson nano提供的jetson pack只有4.6.1,里面Ubuntu的版本为18.0
 
 - cuda-toolkit(版本要求11.0以上，安装可以参考[这里](https://blog.csdn.net/weixin_38076609/article/details/128131332))
 
-- gcc(要求8.4及以上，需要注意cuda-11.0要求所使用的gcc后端大版本不能超过9，但是你仍可以使用更新的gcc以及g++版本来编译其他部分,最新版本的gcc可以编译安装,gcc-8可以通过包管理器直接安装，如果最新版本的gcc安装时不使用`update-alternative`而是使用软链接，请不要忘记将所对应版本的库`<paath>/lib64`添加入`LD_LIBRARY_PATH`中，否则编译时会出现libstdc++fs的错误;`LD_LIBRARY_PATH`也会影响系统支持GLIBC的版本)
+- gcc(要求10及以上，需要注意cuda-11.0要求所使用的gcc后端大版本不能超过9，但是你仍可以使用更新的gcc以及g++版本来编译其他部分,最新版本的gcc可以编译安装或是添加test仓库,gcc-8可以通过包管理器直接安装，如果最新版本的gcc安装时不使用`update-alternative`而是使用软链接，若是使用编译安装请不要忘记将所对应版本的库`<paath>/lib64`添加入`LD_LIBRARY_PATH`中，否则编译时会出现libstdc++fs的错误;`LD_LIBRARY_PATH`也会影响系统支持GLIBC的版本)
 
 
 安装完以上工具后，可以开始编译llama-cpp:
@@ -23,7 +27,7 @@ nvidia给jetson nano提供的jetson pack只有4.6.1,里面Ubuntu的版本为18.0
 ```shell
 cmake -B build -DGGML_CUDA=ON -DCMAKE_CUDA_STANDARD=11 -DCMAKE_C_COMPILER=/usr/local/gcc-12.3/bin/gcc -DCMAKE_CXX_COMPILER=/usr/local/gcc-12.3/bin/g++ -DCMAKE_CUDA_COMPILER=/usr/local/cuda-11.0/bin/nvcc -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-11.0 -DCMAKE_INSTALL_PREFIX=/usr/local/llama.cpp
 
-cmake --build build --config Release -j6
+cmake --build build --config Release -j10
 
 sudo make install
 ```
@@ -50,6 +54,17 @@ mkdir build && cd build
 ../configure --enable-languages=c,c++ --disable-multilib --prefix=/usr/local/gcc-12.3
 make -j$(nproc)
 sudo make install
+```
+
+## GCC包管理器安装
+
+```shell
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo apt update
+sudo apt install gcc-10 g++-10 gcc-9 g++-9
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 60
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 60
+
 ```
 
 ## CMake编译安装
